@@ -1,17 +1,17 @@
 Name: barrier
-Version: @BARRIER_VERSION_MAJOR@.@BARRIER_VERSION_MINOR@.@BARRIER_VERSION_PATCH@
-#Version: @BARRIER_VERSION@ ###FIXME can't have a dash - in the version string
+Version: 2.0.0
 Summary: Keyboard and mouse sharing solution
 Group: Applications/Productivity
 URL: https://github.com/debauchee/barrier/
-Source: barrier-@BARRIER_VERSION_MAJOR@.@BARRIER_VERSION_MINOR@.@BARRIER_VERSION_PATCH@-Source.tar.gz
-#Source: https://github.com/debauchee/barrier/archive/v@BARRIER_VERSION@.tar.gz
+Source: barrier-2.0.0-RC2.tar.gz
+#Source: barrier-2.0.0-Source.tar.gz
+#Source: https://github.com/debauchee/barrier/archive/v2.0.0-RC2.tar.gz
 # workaround the git versionning and set to Release instead of the default Debug
 #Source1: build_env.sh
 Vendor: Debauchee ### FIXME ###
 Packager: Tru Huynh <tru@pasteur.fr>
 License: GPLv2
-Release: @BARRIER_BUILD_NUMBER@%{?dist}
+Release: 1%{?dist}
 
 # at least for CentOS-7 and CentOS-6
 BuildRequires: cmake3 make gcc gcc-c++ curl-devel  openssl-devel
@@ -38,14 +38,14 @@ Work seamlessly across Windows, macOS and Linux.
 %endif
 
 %prep
-%setup -n %{name}-@BARRIER_VERSION_MAJOR@.@BARRIER_VERSION_MINOR@.@BARRIER_VERSION_PATCH@-Source
-#%setup -n %{name}-@BARRIER_VERSION@
+#%setup -n %{name}-2.0.0-Source
+%setup -n %{name}-2.0.0-RC2
 
 %build
 echo "export B_BUILD_TYPE=Release"   > build_env.sh
-echo "export BARRIER_VERSION_MAJOR=@BARRIER_VERSION_MAJOR@" >> build_env.sh
-echo "export BARRIER_VERSION_MINOR=@BARRIER_VERSION_MINOR@" >> build_env.sh
-echo "export BARRIER_VERSION_PATCH=@BARRIER_VERSION_PATCH@" >> build_env.sh
+echo "export BARRIER_VERSION_MAJOR=2" >> build_env.sh
+echo "export BARRIER_VERSION_MINOR=0" >> build_env.sh
+echo "export BARRIER_VERSION_PATCH=0" >> build_env.sh
 echo "export BARRIER_REVISION=12345678"                     >> build_env.sh
 echo 'export B_CMAKE_FLAGS=" -D BARRIER_VERSION_MAJOR=${BARRIER_VERSION_MAJOR} -D BARRIER_VERSION_MINOR=${BARRIER_VERSION_MINOR} -D BARRIER_VERSION_PATCH=${BARRIER_VERSION_PATCH} -D BARRIER_VERSION_STAGE=${BARRIER_VERSION_STAGE} -D BARRIER_REVISION=${BARRIER_REVISION}"'  >> build_env.sh
 
@@ -82,5 +82,5 @@ scl enable devtoolset-3 ./clean_build.sh
 %attr(644,-,-) %{_datarootdir}/icons/hicolor/scalable/apps/barrier.svg
 
 %changelog
-* Fri Mar  9 2018 Tru Huynh <tru@pasteur.fr> - barrier 2.0.0-1
+* Fri Mar 23 2018 Tru Huynh <tru@pasteur.fr> - 
 - Initial rpm package for barrier
