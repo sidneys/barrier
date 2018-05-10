@@ -45,7 +45,7 @@ NetworkAddress::NetworkAddress(int port) :
     m_port(port)
 {
     checkPort();
-    m_address = ARCH->newAnyAddr(IArchNetwork::kINET);
+    m_address = ARCH->newAnyAddr(IArchNetwork::kINET6);
     ARCH->setAddrPort(m_address, m_port);
 }
 
