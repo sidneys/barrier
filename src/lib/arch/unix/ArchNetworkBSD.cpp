@@ -113,6 +113,11 @@ ArchNetworkBSD::newSocket(EAddressFamily family, ESocketType type)
     }
     try {
         setBlockingOnSocket(fd, false);
+        if (family == kINET6) {
+            int flag = 0;
+            if (setsockopt(fd, IPPROTO_IPV6, IPV6_V6ONLY, &flag, sizeof(flag)) != 0)
+                throwError(errno);
+        }
     }
     catch (...) {
         close(fd);
