@@ -506,6 +506,16 @@ ServerApp::openServerScreen()
     return screen;
 }
 
+static const char* const family_string(IArchNetwork::EAddressFamily family)
+{
+    if (family == IArchNetwork::kINET)
+        return "IPv4";
+    if (family == IArchNetwork::kINET6)
+        // assume IPv6 sockets are setup to support IPv4 traffic as well
+        return "IPv4/IPv6";
+    return "Unknown";
+}
+
 bool 
 ServerApp::startServer()
 {
@@ -531,13 +541,15 @@ ServerApp::startServer()
     double retryTime;
     ClientListener* listener = NULL;
     try {
-        listener   = openClientListener(args().m_config->getBarrierAddress());
+        auto listenAddress = args().m_config->getBarrierAddress();
+        auto family = family_string(ARCH->getAddrFamily(listenAddress.getAddress()));
+        listener   = openClientListener(listenAddress);
         m_server   = openServer(*args().m_config, m_primaryClient);
         listener->setServer(m_server);
         m_server->setListener(listener);
         m_listener = listener;
         updateStatus();
-        LOG((CLOG_NOTE "started server, waiting for clients"));
+        LOG((CLOG_NOTE "started server (%s), waiting for clients", family));
         m_serverState = kStarted;
         return true;
     }

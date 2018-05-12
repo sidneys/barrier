@@ -694,6 +694,7 @@ ArchNetworkWinsock::newAnyAddr(EAddressFamily family)
     case kINET6: {
         addr = ArchNetAddressImpl::alloc(sizeof(struct sockaddr_in6));
         auto* ipAddr = TYPED_ADDR(struct sockaddr_in6, addr);
+        memset(ipAddr, 0, sizeof(struct sockaddr_in6));
         ipAddr->sin6_family         = AF_INET6;
         ipAddr->sin6_port           = 0;
         memcpy(&ipAddr->sin6_addr, &in6addr_any, sizeof(in6addr_any));
