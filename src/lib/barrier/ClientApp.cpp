@@ -95,7 +95,7 @@ ClientApp::parseArgs(int argc, const char* const* argv)
                 // Priddy.
                 if (!args().m_restartable || e.getError() == XSocketAddress::kBadPort) {
                     LOG((CLOG_PRINT "%s: %s" BYE,
-                        args().m_pname, e.what(), args().m_pname));
+                        args().m_pname.c_str(), e.what(), args().m_pname.c_str()));
                     m_bye(kExitFailed);
                 }
             }
@@ -131,9 +131,10 @@ ClientApp::help()
            << std::endl
            << "Default options are marked with a *" << std::endl
            << std::endl
-           << "The server address is of the form: [<hostname>][:<port>].  The hostname" << std::endl
-           << "must be the address or hostname of the server.  The port overrides the" << std::endl
-           << "default port, " << kDefaultPort << "." << std::endl;
+           << "The server address is of the form: [<hostname>][:<port>]. The hostname" << std::endl
+           << "must be the address or hostname of the server. Placing brackets around" << std::endl
+           << "an IPv6 address is required when also specifying a port number and " << std::endl
+           << "optional otherwise. The default port number is " << kDefaultPort << "." << std::endl;
 
     LOG((CLOG_PRINT "%s", buffer.str().c_str()));
 }
@@ -516,7 +517,7 @@ ClientApp::runInner(int argc, char** argv, ILogOutputter* outputter, StartupFunc
 {
     // general initialization
     m_serverAddress = new NetworkAddress;
-    args().m_pname = PathUtilities::basename(argv[0]).c_str();
+    args().m_pname = PathUtilities::basename(argv[0]);
 
     // install caller's output filter
     if (outputter != NULL) {

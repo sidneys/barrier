@@ -101,7 +101,7 @@ ServerApp::parseArgs(int argc, const char* const* argv)
             }
             catch (XSocketAddress& e) {
                 LOG((CLOG_PRINT "%s: %s" BYE,
-                    args().m_pname, e.what(), args().m_pname));
+                    args().m_pname.c_str(), e.what(), args().m_pname.c_str()));
                 m_bye(kExitArgs);
             }
         }
@@ -139,8 +139,9 @@ ServerApp::help()
            << std::endl
            << "The argument for --address is of the form: [<hostname>][:<port>].  The" << std::endl
            << "hostname must be the address or hostname of an interface on the system." << std::endl
-           << "The default is to listen on all interfaces.  The port overrides the" << std::endl
-           << "default port, " << kDefaultPort << "." << std::endl
+           << "Placing brackets around an IPv6 address is required when also specifying " << std::endl
+           << "a port number and optional otherwise. The default is to listen on all" << std::endl
+           << "interfaces using port number " << kDefaultPort << "." << std::endl
            << std::endl
            << "If no configuration file pathname is provided then the first of the" << std::endl
            << "following to load successfully sets the configuration:" << std::endl
@@ -207,7 +208,7 @@ ServerApp::loadConfig()
     }
 
     if (!loaded) {
-        LOG((CLOG_PRINT "%s: no configuration available", args().m_pname));
+        LOG((CLOG_PRINT "%s: no configuration available", args().m_pname.c_str()));
         m_bye(kExitConfig);
     }
 }
@@ -792,7 +793,7 @@ ServerApp::runInner(int argc, char** argv, ILogOutputter* outputter, StartupFunc
     // general initialization
     m_barrierAddress = new NetworkAddress;
     args().m_config         = new Config(m_events);
-    args().m_pname = PathUtilities::basename(argv[0]).c_str();
+    args().m_pname = PathUtilities::basename(argv[0]);
 
     // install caller's output filter
     if (outputter != NULL) {
