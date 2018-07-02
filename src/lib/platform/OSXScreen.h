@@ -340,7 +340,7 @@ private:
     Thread*                m_getDropTargetThread;
     String                    m_dropTarget;
     
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
     Mutex*                    m_carbonLoopMutex;
     CondVar<bool>*            m_carbonLoopReady;
 #endif

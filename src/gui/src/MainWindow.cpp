@@ -818,7 +818,7 @@ void MainWindow::setVisible(bool visible)
     m_pActionMinimize->setEnabled(visible);
     m_pActionRestore->setEnabled(!visible);
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // lion
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
     // dock hide only supported on lion :(
     ProcessSerialNumber psn = { 0, kCurrentProcess };
 #pragma GCC diagnostic push

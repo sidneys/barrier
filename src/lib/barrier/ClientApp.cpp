@@ -458,19 +458,19 @@ ClientApp::mainLoop()
     // later.  the timer installed by startClient() will take care of
     // that.
     DAEMON_RUNNING(true);
-    
-#if defined(MAC_OS_X_VERSION_10_7)
-    
+
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
+
     Thread thread(
         new TMethodJob<ClientApp>(
             this, &ClientApp::runEventsLoop,
             NULL));
-    
+
     // wait until carbon loop is ready
     OSXScreen* screen = dynamic_cast<OSXScreen*>(
         m_clientScreen->getPlatformScreen());
     screen->waitForCarbonLoop();
-    
+
     runCocoaApp();
 #else
     m_events->loop();

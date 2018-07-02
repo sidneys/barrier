@@ -17,7 +17,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#ifdef MAC_OS_X_VERSION_10_7
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 
 @interface OSXDragView : NSView<NSDraggingSource,NSDraggingInfo>
 {

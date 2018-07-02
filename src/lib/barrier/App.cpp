@@ -87,7 +87,7 @@ App::version()
 int
 App::run(int argc, char** argv)
 {    
-#if MAC_OS_X_VERSION_10_7
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
     // dock hide only supported on lion :(
     ProcessSerialNumber psn = { 0, kCurrentProcess };
     
@@ -231,7 +231,7 @@ App::runEventsLoop(void*)
 {
     m_events->loop();
     
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
     
     stopCocoaLoop();
     

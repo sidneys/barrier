@@ -743,7 +743,7 @@ ServerApp::mainLoop()
     // that.
     DAEMON_RUNNING(true);
     
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
     
     Thread thread(
         new TMethodJob<ServerApp>(

@@ -142,7 +142,7 @@ int waitForTray()
 #if defined(Q_OS_MAC)
 bool checkMacAssistiveDevices()
 {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 // mavericks
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 // Mac OS X Mavericks
 
 	// new in mavericks, applications are trusted individually
 	// with use of the accessibility api. this call will show a

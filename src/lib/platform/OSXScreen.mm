@@ -114,7 +114,7 @@ OSXScreen::OSXScreen(IEventQueue* events, bool isPrimary, bool autoShowHideCurso
 		// only needed when running as a server.
 		if (m_isPrimary) {
 		
-#if defined(MAC_OS_X_VERSION_10_9)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 			// we can't pass options to show the dialog, this must be done by the gui.
 			if (!AXIsProcessTrusted()) {
 				throw XArch("assistive devices does not trust this process, allow it in system settings.");
@@ -152,7 +152,7 @@ OSXScreen::OSXScreen(IEventQueue* events, bool isPrimary, bool autoShowHideCurso
 
 		// create thread for monitoring system power state.
 		*m_pmThreadReady = false;
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 		m_carbonLoopMutex = new Mutex();
 		m_carbonLoopReady = new CondVar<bool>(m_carbonLoopMutex, false);
 #endif
@@ -218,7 +218,7 @@ OSXScreen::~OSXScreen()
 	delete m_keyState;
 	delete m_screensaver;
 	
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 	delete m_carbonLoopMutex;
 	delete m_carbonLoopReady;
 #endif
@@ -588,7 +588,7 @@ OSXScreen::fakeMouseButton(ButtonID id, bool press)
 void
 OSXScreen::getDropTargetThread(void*)
 {
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 	char* cstr = NULL;
 	
 	// wait for 5 secs for the drop destinaiton string to be filled.
@@ -1659,8 +1659,8 @@ OSXScreen::watchSystemPowerThread(void*)
 	
 	LOG((CLOG_DEBUG "waiting for event loop"));
 	m_events->waitForReady();
-    
-#if defined(MAC_OS_X_VERSION_10_7)
+
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 	{
 		Lock lockCarbon(m_carbonLoopMutex);
 		if (*m_carbonLoopReady == false) {
@@ -2061,7 +2061,7 @@ OSXScreen::fakeDraggingFiles(DragFileList fileList)
 			fileList.at(0).getFilename());
 	}
 
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 	fakeDragging(fileExt.c_str(), m_xCursor, m_yCursor);
 #else
 	LOG((CLOG_WARN "drag drop not supported"));
@@ -2096,7 +2096,7 @@ OSXScreen::getDraggingFilename()
 void
 OSXScreen::waitForCarbonLoop() const
 {
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 	if (*m_carbonLoopReady) {
 		LOG((CLOG_DEBUG "carbon loop already ready"));
 		return;

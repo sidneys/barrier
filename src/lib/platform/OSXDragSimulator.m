@@ -20,7 +20,7 @@
 #import <CoreData/CoreData.h>
 #import <Cocoa/Cocoa.h>
 
-#if defined(MAC_OS_X_VERSION_10_7)
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 // Mac OS X Lion
 
 NSWindow* g_dragWindow = NULL;
 OSXDragView* g_dragView = NULL;
