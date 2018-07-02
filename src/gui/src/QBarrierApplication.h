@@ -22,6 +22,10 @@
 
 #include <QApplication>
 
+#if defined(Q_OS_MAC)
+#include "platform/OSXAppearance.h"
+#endif
+
 class QSessionManager;
 
 class QBarrierApplication : public QApplication
