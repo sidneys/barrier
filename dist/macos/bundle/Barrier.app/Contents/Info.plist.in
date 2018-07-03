@@ -28,5 +28,7 @@
     <string>© 2018 Debauchee Open Source Group</string>
     <key>LSMinimumSystemVersion</key>
     <string>10.9.0</string>
+    <key>NSRequiresAquaSystemAppearance</key>
+    <true/>
   </dict>
 </plist>
