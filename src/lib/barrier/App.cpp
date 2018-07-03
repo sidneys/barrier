@@ -46,6 +46,7 @@
 
 #if defined(__APPLE__)
 #include "platform/OSXDragSimulator.h"
+#include "platform/OSXAppearance.h"
 #endif
 
 App* App::s_instance = nullptr;
@@ -90,7 +91,10 @@ App::run(int argc, char** argv)
 #if MAC_OS_X_VERSION_10_7
     // dock hide only supported on lion :(
     ProcessSerialNumber psn = { 0, kCurrentProcess };
-    
+
+    // NSAppearance
+    setAppearance();
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     GetCurrentProcess(&psn);

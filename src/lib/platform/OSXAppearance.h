@@ -18,17 +18,15 @@
 
 #pragma once
 
-//#include <QObject>
-#include <Carbon/Carbon.h>
+#include "common/common.h"
+
+#import <CoreFoundation/CoreFoundation.h>
 
 
-//class OSXAppearance : public QObject
-class OSXAppearance {
-     //Q_OBJECT
-public:
-    OSXAppearance();
-    virtual ~OSXAppearance();
-
-protected:
-    void init();
-};
+#if defined(__cplusplus)
+extern "C" {
+#endif
+    void setAppearance();
+#if defined(__cplusplus)
+}
+#endif
